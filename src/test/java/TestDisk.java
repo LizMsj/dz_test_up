@@ -24,8 +24,8 @@ public class TestDisk {
 
     @Test(testName = "test2", expectedExceptions = AssertionError.class)
     public void TestTwo() {
-        Integer funcCheck = Yravnenie.yravnenueDisk(11, 1, 5);
-        Integer prov = 11 - 4 * 12 * 5;
+        Integer funcCheck = Yravnenie.yravnenueDisk(1, 12, 1);
+        Integer prov = 1 -  1 * 1 * 4;
         Assert.assertEquals(funcCheck, prov, "значения не совпадают");
     }
 
