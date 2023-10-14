@@ -1,32 +1,41 @@
+import io.qameta.allure.Epic;
+import io.qameta.allure.Step;
+import org.junit.AfterClass;
 import org.testng.Assert;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+@Epic("Тест кол-ва корней")
 public class TestDisk {
 
-    @BeforeSuite
+    @BeforeClass
     public void previewTest() {
-        System.out.println("Start test classes / point in");
+        System.out.println("Start test classes TestDisk");
     }
 
-    @AfterSuite
+    @AfterClass
     public void endingTest() {
-        System.out.println("End test classes / point exit");
+        System.out.println("End test classes TestDisk");
     }
 
-    @Test(testName = "test1")
+    @Test(testName = "test1", description = "первый тест")
     public void TestOne() {
-        Integer funcCheck = Yravnenie.yravnenueDisk(12, 1, 5);
-        Integer prov = 1 - 4 * 12 * 5;
-        Assert.assertEquals(funcCheck, prov);
+        testNum(1, 7, 6);
+        testNum(4, -7, -6);
+        testNum(1, 0, -6);
+
     }
 
-    @Test(testName = "test2", expectedExceptions = AssertionError.class)
+    @Test(testName = "test2", description = "второй тест")
     public void TestTwo() {
-        Integer funcCheck = Yravnenie.yravnenueDisk(1, 12, 1);
-        Integer prov = 1 -  1 * 1 * 4;
-        Assert.assertEquals(funcCheck, prov, "значения не совпадают");
+        testNum(-5, -9, -0);
     }
 
+    @Step("Проверка числа")
+    public void testNum(Integer a, Integer b, Integer c)
+    {
+        Integer d = b * b - 4 * a * c;
+       Assert.assertEquals(d, Yravnenie.yravnenueDisk(a, b, c));
+    }
 }
+
