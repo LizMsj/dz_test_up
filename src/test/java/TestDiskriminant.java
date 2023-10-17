@@ -6,7 +6,7 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 @Epic("Тест кол-ва корней")
-public class TestDisk {
+public class TestDiskriminant {
 
     @BeforeClass
     public void previewTest() {

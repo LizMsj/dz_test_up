@@ -1,7 +1,6 @@
 package steps;
 
-import javax.xml.ws.Response;
-
+import io.restassured.response.Response;
 import static io.restassured.RestAssured.given;
 
 public class ApiSteps {
@@ -16,6 +15,8 @@ public class ApiSteps {
                 .assertThat()
                 .statusCode(200)
                 .extract().response();
+
+        System.out.println();
     }
 
 }

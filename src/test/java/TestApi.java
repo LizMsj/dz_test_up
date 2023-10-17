@@ -5,6 +5,6 @@ public class TestApi extends BaseTests {
     @Test(description = "проверка апи юзер лист")
     public void testUserList()
     {
-
+        apiSteps.getUserList();
     }
 }

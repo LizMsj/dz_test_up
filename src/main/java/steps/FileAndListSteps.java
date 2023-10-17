@@ -1,27 +1,26 @@
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
+package steps;
+
 import io.qameta.allure.Step;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
-import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
-import java.io.*;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 
+public class FileAndListSteps {
 
-@Epic("Гр.1 test.txt")
-@Feature("Подгр. 1 вхождение подстроки")
-public class Class1 {
-
-    String path = null;
-    String fileText = null;
     File file;
-    @BeforeClass
-    public void formedFile()
-    {
+    String path = "";
+    String fileText;
+    ArrayList<Integer> list = new ArrayList<>();
+
+    @Step("Создание файла")
+    public void formedFile() {
         try {
             file = new File("test.txt");
-            String path = file.getPath();
+            path = file.getPath();
             PrintWriter writer = new PrintWriter("test.txt", "UTF-8");
             writer.println("no no yes code");
             writer.println("get code console");
@@ -32,7 +31,7 @@ public class Class1 {
         }
     }
 
-    @AfterClass
+    @Step("Удаление файла")
     public void deleteFile()
     {
         try {
@@ -40,23 +39,6 @@ public class Class1 {
         } catch (Exception e) {
             System.out.println("Error delete file " + e.getMessage());
         }
-    }
-
-    @Test(description = "Вхождение в файл подстроки code")
-    public void testotest1()
-    {
-        createFile();
-        readLineFile();
-        detectedFile("code");
-
-    }
-    @Test(description = "Не вхождение в файл подстроки yes")
-    public void testotest2()
-    {
-        createFile();
-        readLineFile();
-        detectedFile("yes");
-
     }
 
     @Step("Чтение файла")
@@ -84,5 +66,44 @@ public class Class1 {
     public void createFile()
     {
         Assert.assertTrue(file.exists());
+    }
+
+    @Step("Создаем лист")
+    public void createList() {
+        for (int i = 0; i < 20; i++)
+            list.add(i * i);
+
+    }
+
+    @Step("Очищаем лист")
+    public void deleteList() {
+        list.clear();
+    }
+
+    @Step("Заменить элемент")
+    public void zamElemList(Integer a, Integer b)
+    {
+        Integer tmp = list.indexOf(a);
+        list.remove(tmp);
+        list.add(tmp, b);
+    }
+    @Step("Проверить элемент")
+    public void checkElemList(Integer a)
+    {
+        Assert.assertTrue(list.contains(a));
+    }
+
+    @Step("Удалить элемент")
+    public void delElemList(Integer a)
+    {
+        list.remove(list.indexOf(a));
+        Assert.assertFalse(list.contains(a));
+    }
+
+    @Step("Добавить элемент")
+    public void addElemList(Integer a)
+    {
+        list.add(a);
+        Assert.assertFalse(list.contains(list.indexOf(a)));
     }
 }

@@ -6,7 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 @Epic("Тест дискриминанта")
-public class TestRad {
+public class TestRadical {
     @BeforeClass
     public void previewTest() {
         System.out.println("Start test classes TestRad");
