@@ -18,9 +18,9 @@ public class HardListTests extends BaseTests {
     public void testZamList1()
     {
         fileAndListSteps.createList();
-        fileAndListSteps.checkElemList(25);
+        fileAndListSteps.checkElemList(25, true);
         fileAndListSteps.zamElemList(4, 123);
-        fileAndListSteps.checkElemList(123);
+        fileAndListSteps.checkElemList(123, true);
         fileAndListSteps.deleteList();
     }
 
@@ -28,10 +28,10 @@ public class HardListTests extends BaseTests {
     public void testZamList2()
     {
         fileAndListSteps.createList();
-        fileAndListSteps.checkElemList(9);
+        fileAndListSteps.checkElemList(9, true);
         fileAndListSteps.zamElemList(9, 20000);
-        fileAndListSteps.checkElemList(20000);
-        fileAndListSteps.checkElemList(9);
+        fileAndListSteps.checkElemList(20000, true);
+        fileAndListSteps.checkElemList(9, true);
         fileAndListSteps.deleteList();
     }
 }

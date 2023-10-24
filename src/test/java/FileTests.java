@@ -13,16 +13,16 @@ public class FileTests extends BaseTests {
     public void testCreateDeleteFile()
     {
         fileAndListSteps.formedFile();
-        fileAndListSteps.createFile();
+        fileAndListSteps.createFile(true);
         fileAndListSteps.deleteFile();
-        fileAndListSteps.createFile();
+        fileAndListSteps.createFile(false);
 
     }
     @Test(description = "Не вхождение в файл подстроки yes")
     public void testWorkWithFiles()
     {
         fileAndListSteps.formedFile();
-        fileAndListSteps.createFile();
+        fileAndListSteps.createFile(true);
         fileAndListSteps.readLineFile();
         fileAndListSteps.detectedFile("code");
         fileAndListSteps.deleteFile();

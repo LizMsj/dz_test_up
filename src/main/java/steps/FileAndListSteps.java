@@ -63,9 +63,13 @@ public class FileAndListSteps {
     }
 
     @Step("Существование файла")
-    public void createFile()
+    public void createFile(Boolean have)
     {
-        Assert.assertTrue(file.exists());
+        if (have)
+            Assert.assertTrue(file.exists());
+        else
+            Assert.assertFalse(file.exists());
+
     }
 
     @Step("Создаем лист")
@@ -88,9 +92,13 @@ public class FileAndListSteps {
         list.add(tmp, b);
     }
     @Step("Проверить элемент")
-    public void checkElemList(Integer a)
+    public void checkElemList(Integer a,  Boolean have)
     {
-        Assert.assertTrue(list.contains(a));
+        if(have) {
+            Assert.assertTrue(list.contains(a));
+        }else {
+            Assert.assertTrue(!list.contains(a));
+        }
     }
 
     @Step("Удалить элемент")

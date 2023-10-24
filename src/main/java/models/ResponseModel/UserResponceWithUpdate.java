@@ -11,5 +11,6 @@ public class UserResponceWithUpdate {
 
     public String name;
     public String job;
+    public String updatedAt;
 
 }

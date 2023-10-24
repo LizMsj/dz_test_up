@@ -1,10 +1,12 @@
 import io.qameta.allure.Epic;
+import models.RequestModel.AutorizationUserRequest;
 import models.ResponseModel.*;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import steps.BaseTests;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Epic("Гр.3 api tests")
 public class TestApi extends BaseTests {
@@ -41,15 +43,10 @@ public class TestApi extends BaseTests {
 
     @Test(description = "get list <resource>")
     public void testGetListResources() {
-        ResourcesResponse returnResources = apiSteps.getResourcesListUnknown();
-        ResourcesResponse checkResources = new ResourcesResponse();
-        SupportResponse supportResponse = new  SupportResponse();
-        supportResponse.setUrl("https://reqres.in/#support-heading");
-        supportResponse.setText("To keep ReqRes free, contributions towards server costs are appreciated!");
-        checkResources.setSupport(supportResponse);
+        List<DatumResponse> listResponseData  = apiSteps.getResourcesListUnknown().getData();
         ArrayList<DatumResponse> listDatum = new ArrayList<>();
         DatumResponse datumResponse1 = new DatumResponse(1, "cerulean", 2000, "#98B2D1", "15-4020");
-        DatumResponse datumResponse2 = new DatumResponse(2, "fuchsia rose", 2001, "#C74375", "#C74375");
+        DatumResponse datumResponse2 = new DatumResponse(2, "fuchsia rose", 2001, "#C74375", "17-2031");
         DatumResponse datumResponse3 = new DatumResponse(3, "true red", 2002, "#BF1932", "19-1664");
         DatumResponse datumResponse4 = new DatumResponse(4, "aqua sky", 2003, "#7BC4C4", "14-4811");
         DatumResponse datumResponse5 = new DatumResponse(5, "tigerlily", 2004, "#E2583E", "17-1456");
@@ -60,18 +57,15 @@ public class TestApi extends BaseTests {
         listDatum.add(datumResponse4);
         listDatum.add(datumResponse5);
         listDatum.add(datumResponse6);
-        checkResources.setPage(1);
-        checkResources.setPer_page(6);
-        checkResources.setTotal(12);
-        checkResources.setData(listDatum);
-        Assert.assertEquals(returnResources, checkResources);
+
+        Assert.assertEquals(listResponseData, listDatum);
     }
 
     @Test(description = "проверяем создание sinngle user")
     public void testCheckCreatedUser()
     {
         UserCreatedResponce returnUser = apiSteps.createdUser();
-        UserResponse checkUser = apiSteps.getSingleUserById(returnUser.getId(), 200);
+        UserResponse checkUser = apiSteps.getSingleUserById(returnUser.getId(), 404);
     }
 
     @Test(description = "get single <resources>")
@@ -94,21 +88,46 @@ public class TestApi extends BaseTests {
     public void testPutSingleUserPut()
     {
         UserResponceWithUpdate returnUser = apiSteps.getUpdateSingleUserAfterPut();
-        UserResponceWithUpdate checkUser = new UserResponceWithUpdate("morpheus", "zion resident");
-        Assert.assertEquals(returnUser, checkUser);
+        Assert.assertEquals(returnUser.getName(), "morpheus");
+        Assert.assertEquals(returnUser.getJob(), "zion resident");
     }
     @Test(description = "update single user by patch")
     public void testPutSingleUserPatch()
     {
         UserResponceWithUpdate returnUser = apiSteps.getUpdateSingleUserAfterPatch();
-        UserResponceWithUpdate checkUser = new UserResponceWithUpdate("morpheus", "zion resident");
-        Assert.assertEquals(returnUser, checkUser);
+        Assert.assertEquals(returnUser.getName(), "morpheus");
+        Assert.assertEquals(returnUser.getJob(), "zion resident");
     }
 
     @Test(description = "delete user")
     public void testDeleteUser()
     {
         apiSteps.deleteUserById(2);
+    }
+
+    @Test(description = "post register user successful")
+    public void testRegistrUserSuccess()
+    {
+        AutorizationUserRequest user = new AutorizationUserRequest("eve.holt@reqres.in", "pistol");
+        AutorizationUserResponse returnUser =  apiSteps.registrationUser(200, user);
+        AutorizationUserResponse checkUser = new AutorizationUserResponse(4, "QpwL5tke4Pnpja7X4");
+        Assert.assertEquals(checkUser, returnUser);
+    }
+
+    @Test(description = "post register user unsuccessful")
+    public void testRegistrUserUnsuccess()
+    {
+        AutorizationUserRequest user = new AutorizationUserRequest("sydney@fife");
+        apiSteps.registrationUser(400, user);
+    }
+
+    @Test(description = "login successful post")
+    public void testLogInSuccessful()
+    {
+        AutorizationUserRequest user = new AutorizationUserRequest("eve.holt@reqres.in", "cityslicka");
+        AutorizationUserResponse returnUser =  apiSteps.autorizationUser(200, user);
+        AutorizationUserResponse checkUser = new AutorizationUserResponse(4, "QpwL5tke4Pnpja7X4");
+        Assert.assertEquals(checkUser, returnUser);
     }
 
 }

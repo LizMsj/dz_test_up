@@ -20,8 +20,8 @@ public class SimpleListTests extends BaseTests {
     {
         fileAndListSteps.createList();
         fileAndListSteps.addElemList(123);
-        fileAndListSteps.checkElemList(123);
-        fileAndListSteps.checkElemList(81);
+        fileAndListSteps.checkElemList(123, true);
+        fileAndListSteps.checkElemList(81, true);
         fileAndListSteps.deleteList();
     }
 
@@ -31,9 +31,9 @@ public class SimpleListTests extends BaseTests {
         fileAndListSteps.createList();
         fileAndListSteps.delElemList(4);
         fileAndListSteps.delElemList(16);
-        fileAndListSteps.checkElemList(16);
+        fileAndListSteps.checkElemList(16, false);
         fileAndListSteps.delElemList(9);
-        fileAndListSteps.checkElemList(49);
+        fileAndListSteps.checkElemList(49, true);
         fileAndListSteps.deleteList();
     }
 

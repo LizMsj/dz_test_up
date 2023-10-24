@@ -3,6 +3,7 @@ package steps;
 import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import models.RequestModel.AutorizationUserRequest;
 import models.RequestModel.UserRequest;
 import models.ResponseModel.UserResponceWithUpdate;
 import models.ResponseModel.*;
@@ -25,7 +26,7 @@ public class ApiSteps {
     }
 
     @Step("Получить пользователя по ай ди")
-    public UserResponse getSingleUserById(int id, Integer stCode)
+    public UserResponse  getSingleUserById(int id, Integer stCode)
     {
         return given()
                 .baseUri("https://reqres.in/")
@@ -117,6 +118,34 @@ public class ApiSteps {
                 .assertThat()
                 .statusCode(204)
                 .extract().response();
+    }
+
+    @Step("регистрция пользователя")
+    public AutorizationUserResponse registrationUser(Integer stCode, AutorizationUserRequest user)
+    {
+        return given()
+                .baseUri("https://reqres.in/")
+                .body(user)
+                .when()
+                .contentType(ContentType.JSON)
+                .post("/api/register")
+                .then()
+                .statusCode(stCode)
+                .extract().response().body().as(AutorizationUserResponse.class);
+    }
+
+    @Step("авторизация пользователя")
+    public AutorizationUserResponse autorizationUser(Integer stCode, AutorizationUserRequest user)
+    {
+        return given()
+                .baseUri("https://reqres.in/")
+                .body(user)
+                .when()
+                .contentType(ContentType.JSON)
+                .post("/api/login")
+                .then()
+                .statusCode(stCode)
+                .extract().response().body().as(AutorizationUserResponse.class);
     }
 }
 

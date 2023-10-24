@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -17,7 +18,7 @@ public class ResourcesResponse {
     public int total;
     @JsonProperty("total_pages")
     public int totalPages;
-    public ArrayList<DatumResponse> data;
+    public List<DatumResponse> data;
     public SupportResponse support;
 
 }
