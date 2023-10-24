@@ -2,18 +2,16 @@ package steps;
 
 import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
-import io.restassured.mapper.ObjectMapperType;
 import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 import models.RequestModel.UserRequest;
-import models.ResponseModel.UserCreatedResponce;
-import models.ResponseModel.UserResponse;
+import models.ResponseModel.UserResponceWithUpdate;
+import models.ResponseModel.*;
 
 import static io.restassured.RestAssured.given;
 
 public class ApiSteps {
 
-    @Step
+    @Step("gполучить user лист")
     public void getUserList()
     {
         Response response = (Response) given()
@@ -27,14 +25,14 @@ public class ApiSteps {
     }
 
     @Step("Получить пользователя по ай ди")
-    public UserResponse getSingleUserById(int id)
+    public UserResponse getSingleUserById(int id, Integer stCode)
     {
         return given()
                 .baseUri("https://reqres.in/")
                 .when()
                 .get("/api/users/" + id)
                 .then()
-                .statusCode(200)
+                .statusCode(stCode)
                 .extract().response().body().as(UserResponse.class);
     }
 
@@ -53,6 +51,72 @@ public class ApiSteps {
                 .then()
                 .statusCode(201)
                 .extract().response().body().as(UserCreatedResponce.class);
+    }
+
+    @Step("полуить responce лист")
+    public ResourcesResponse getResourcesListUnknown()
+    {
+        return given()
+                .baseUri("https://reqres.in/")
+                .when()
+                .get("/api/unknown")
+                .then()
+                .statusCode(200)
+                .extract().response().body().as(ResourcesResponse.class);
+    }
+
+    @Step("получить responce лист по id")
+    public ResourcesDatumSupportResponce getResourcesListById(Integer id, Integer stCode)
+    {
+        return given()
+                .baseUri("https://reqres.in/")
+                .when()
+                .get("/api/unknown/" + id)
+                .then()
+                .statusCode(stCode)
+                .extract().response().body().as(ResourcesDatumSupportResponce.class);
+    }
+
+    @Step("обновить данные о пользователе")
+    public UserResponceWithUpdate getUpdateSingleUserAfterPut()
+    {
+        UserRequest user = new UserRequest("morpheus", "zion resident");
+        return given()
+                .baseUri("https://reqres.in/")
+                .body(user)
+                .when()
+                .contentType(ContentType.JSON)
+                .put("/api/users/2")
+                .then()
+                .statusCode(200)
+                .extract().response().body().as(UserResponceWithUpdate.class);
+    }
+
+    @Step("обновить данные о пользователе")
+    public UserResponceWithUpdate getUpdateSingleUserAfterPatch()
+    {
+        UserRequest user = new UserRequest("morpheus", "zion resident");
+        return given()
+                .baseUri("https://reqres.in/")
+                .body(user)
+                .when()
+                .contentType(ContentType.JSON)
+                .patch("/api/users/2")
+                .then()
+                .statusCode(200)
+                .extract().response().body().as(UserResponceWithUpdate.class);
+    }
+    @Step("delete user by id")
+    public void deleteUserById(Integer id)
+    {
+        Response response = (Response) given()
+                .baseUri("https://reqres.in/")
+                .when()
+                .delete("/api/users/" + id)
+                .then()
+                .assertThat()
+                .statusCode(204)
+                .extract().response();
     }
 }
 
