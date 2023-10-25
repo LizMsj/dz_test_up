@@ -5,6 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import steps.BaseTests;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,10 +127,38 @@ public class TestApi extends BaseTests {
     {
         AutorizationUserRequest user = new AutorizationUserRequest("eve.holt@reqres.in", "cityslicka");
         AutorizationUserResponse returnUser =  apiSteps.autorizationUser(200, user);
-        AutorizationUserResponse checkUser = new AutorizationUserResponse(4, "QpwL5tke4Pnpja7X4");
+        AutorizationUserResponse checkUser = new AutorizationUserResponse(null, "QpwL5tke4Pnpja7X4");
         Assert.assertEquals(checkUser, returnUser);
     }
 
+    @Test(description = "login successful post")
+    public void testLogInUnsuccessful()
+    {
+        AutorizationUserRequest user = new AutorizationUserRequest("eve.holt@reqres.in");
+        AutorizationUserResponse returnUser =  apiSteps.autorizationUser(400, user);
+        AutorizationUserResponse checkUser = new AutorizationUserResponse(null, null, "Missing password");
+        Assert.assertEquals(checkUser, returnUser);
+    }
+
+    @Test(description = "get dalayed response list")
+    public void testDelayedResponseList()
+    {
+        List<DataResponse> dataResponse = apiSteps.getDelayedList(200).getData();
+        ArrayList<DataResponse> checkDataResponse = new ArrayList<>();
+        DataResponse data1 = new DataResponse(1, "george.bluth@reqres.in", "George", "Bluth", "https://reqres.in/img/faces/1-image.jpg");
+        DataResponse data2 = new DataResponse(2, "janet.weaver@reqres.in", "Janet", "Weaver", "https://reqres.in/img/faces/2-image.jpg");
+        DataResponse data3 = new DataResponse(3, "emma.wong@reqres.in", "Emma", "Wong", "https://reqres.in/img/faces/3-image.jpg");
+        DataResponse data4 = new DataResponse(4, "eve.holt@reqres.in", "Eve", "Holt", "https://reqres.in/img/faces/4-image.jpg");
+        DataResponse data5 = new DataResponse(5, "charles.morris@reqres.in", "Charles", "Morris", "https://reqres.in/img/faces/5-image.jpg");
+        DataResponse data6 = new DataResponse(6, "tracey.ramos@reqres.in", "Tracey", "Ramos", "https://reqres.in/img/faces/6-image.jpg");
+        checkDataResponse.add(data1);
+        checkDataResponse.add(data2);
+        checkDataResponse.add(data3);
+        checkDataResponse.add(data4);
+        checkDataResponse.add(data5);
+        checkDataResponse.add(data6);
+        Assert.assertEquals(checkDataResponse, dataResponse);
+    }
 }
 
 

@@ -14,7 +14,7 @@ public class AutorizationUserResponse {
     public String error;
 
     public AutorizationUserResponse(Integer id, String token){
-        this.token = token;
         this.id = id;
+        this.token = token;
     }
 }

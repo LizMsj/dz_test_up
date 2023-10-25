@@ -147,6 +147,18 @@ public class ApiSteps {
                 .statusCode(stCode)
                 .extract().response().body().as(AutorizationUserResponse.class);
     }
+
+    @Step("Получить список пользователей delayed")
+    public DelayedResponse  getDelayedList(Integer stCode)
+    {
+        return given()
+                .baseUri("https://reqres.in/")
+                .when()
+                .get("/api/users?delay=3")
+                .then()
+                .statusCode(stCode)
+                .extract().response().body().as(DelayedResponse.class);
+    }
 }
 
 
