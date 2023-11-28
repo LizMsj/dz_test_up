@@ -3,13 +3,13 @@ pipeline {
 
     tools {
         jdk: "1.8"
-        maven: "4.0.0"
+        maven: "3.9.5"
     }
 
     stages{
         stage("Build") {
             steps {
-                sh "mvn -Dmaven.test.failure.ignore=true clean package"
+                sh "mvn clean test '-Dtest=test.*Test'"
             }
         }
     }
