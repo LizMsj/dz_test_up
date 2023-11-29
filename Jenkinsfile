@@ -17,6 +17,7 @@ pipeline {
               reportBuildPolicy: 'ALWAYS',
               results: [[path: 'target/allure-results']]
           ])
+        }
       }
     }
   }
