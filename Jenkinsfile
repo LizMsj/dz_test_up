@@ -9,7 +9,7 @@ pipeline {
         sh "mvn clean test"
       }
       post { 
-        script(
+        steps{
           allure([
             includeProperties: false,
             jdk: '',
