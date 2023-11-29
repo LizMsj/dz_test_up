@@ -4,7 +4,7 @@ pipeline {
     maven 'maven_jenkins' 
   }
   stages {
-    stage ('Build') {
+    stage ('Tests') {
       steps {
         sh "mvn clean test"
       }
