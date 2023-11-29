@@ -9,13 +9,4 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            allure{[
-                reportBuildPolicy: 'ALWAYS',
-                results: [[path: 'allure-results']]
-            ]}
-        }
-    }
-
 }
