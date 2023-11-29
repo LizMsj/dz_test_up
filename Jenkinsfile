@@ -8,16 +8,16 @@ pipeline {
       steps {
         sh "mvn clean test"
       }
-      post { 
-        steps{
-          allure([
-            includeProperties: false,
-            jdk: '',
-            properties: [],
-            reportBuildPolicy: 'ALWAYS',
-            results: [[path: 'target/allure-results']]
-          ])
-        }
+    }
+    stage('Allure') { 
+      steps {
+        allure([
+          includeProperties: false,
+          jdk: '',
+          properties: [],
+          reportBuildPolicy: 'ALWAYS',
+          results: [[path: 'target/allure-results']]
+        ])  
       }
     }
   }
